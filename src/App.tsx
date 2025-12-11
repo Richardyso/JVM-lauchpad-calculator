@@ -1,35 +1,54 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [display, setDisplay] = useState("");
+
+  function addChar(char: string) {
+    setDisplay(display + char);
+  }
+
+  function clearDisplay() {
+    setDisplay("");
+  }
+
+  function calculate() {
+    try {
+      // eval usado apenas para fins didáticos
+      const result = eval(display);
+      setDisplay(String(result));
+    } catch {
+      setDisplay("Erro");
+    }
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="calc">
+      <input type="text" value={display} readOnly />
 
-export default App
+      <div className="keys">
+        <button onClick={() => addChar("7")}>7</button>
+        <button onClick={() => addChar("8")}>8</button>
+        <button onClick={() => addChar("9")}>9</button>
+        <button onClick={() => addChar("/")}>/</button>
+
+        <button onClick={() => addChar("4")}>4</button>
+        <button onClick={() => addChar("5")}>5</button>
+        <button onClick={() => addChar("6")}>6</button>
+        <button onClick={() => addChar("*")}>*</button>
+
+        <button onClick={() => addChar("1")}>1</button>
+        <button onClick={() => addChar("2")}>2</button>
+        <button onClick={() => addChar("3")}>3</button>
+        <button onClick={() => addChar("-")}>-</button>
+
+        <button onClick={() => addChar("0")}>0</button>
+        <button onClick={() => addChar(".")}>.</button>
+        <button onClick={calculate}>=</button>
+        <button onClick={() => addChar("+")}>+</button>
+      </div>
+
+      <button className="wide" onClick={clearDisplay}>Limpar</button>
+    </div>
+  );
+}
